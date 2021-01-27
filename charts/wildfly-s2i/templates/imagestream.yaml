@@ -16,6 +16,8 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: {{ include "wildfly-s2i.builderImage" . }}
+  labels:
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
   annotations:
     openshift.io/display-name: "WildFly S2I"
 spec:
@@ -35,6 +37,8 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: {{ include "wildfly-s2i.runtimeImage" . }}
+  labels:
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
 spec:
   tags:
   - name: "{{ include "wildfly-s2i.version" . }}"
