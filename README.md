@@ -8,7 +8,7 @@ The WildFly Charts can be installed from [https://jmesnil.github.io/wildfly-char
 ```
 $ helm repo add jmesnil https://jmesnil.github.io/wildfly-charts/
 "jmesnil" has been added to your repositories
-helm search repo wildfly
+$ helm search repo wildfly
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
 ...
 jmesnil/wildfly-s2i     0.8.1           22.0            Build WildFly applications with S2I
