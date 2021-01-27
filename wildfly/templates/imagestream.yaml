@@ -1,0 +1,13 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.appname" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.appBuilderImage" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
