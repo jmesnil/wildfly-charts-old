@@ -11,4 +11,15 @@ entries:
     urls:
     - https://github.com/jmesnil/wildfly-charts/releases/download/wildfly-0.1.1/wildfly-0.1.1.tgz
     version: 0.1.1
+  wildfly-s2i:
+  - apiVersion: v2
+    appVersion: "22.0"
+    created: "2021-01-27T17:05:32.179719079Z"
+    description: Build WildFly applications with S2I
+    digest: 5887d0e7649ecf0e3faaaa52c9416b6e286dee8cb698a06b80b3ac0d4a170731
+    name: wildfly-s2i
+    type: application
+    urls:
+    - https://github.com/jmesnil/wildfly-charts/releases/download/wildfly-s2i-0.8.0/wildfly-s2i-0.8.0.tgz
+    version: 0.8.0
 generated: "2021-01-27T16:48:45.331035507Z"
