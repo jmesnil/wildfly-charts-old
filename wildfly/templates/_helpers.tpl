@@ -27,6 +27,14 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+{{- define "wildfly.builderImage" -}}
+{{- include "wildfly.fullname" . }}-builder
+{{- end }}
+
+{{- define "wildfly.runtimeImage" -}}
+{{- include "wildfly.fullname" . }}-runtime
+{{- end }}
+
 {{- define "wildfly.version" -}}
 {{- default .Chart.AppVersion .Values.wildfly.version }}
 {{- end }}
@@ -40,12 +48,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
 {{- end }}
 {{- end }}
 

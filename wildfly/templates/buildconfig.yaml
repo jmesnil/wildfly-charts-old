@@ -22,8 +22,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: wildfly:{{ include "wildfly.version" . }}
-        namespace: {{ .Values.wildfly.namespace }}
+        name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
       env:
         {{- if .Values.galleon.layers }}
         - name: "GALLEON_PROVISION_LAYERS"
@@ -51,7 +50,7 @@ spec:
   source:
     type: Docker
     dockerfile: |-
-      FROM wildfly-runtime:{{ include "wildfly.version" . }}
+      FROM {{ include "wildfly.runtimeImage" . }}:{{ include "wildfly.version" . }}
       COPY /server $JBOSS_HOME
       USER root
       RUN chown -R jboss:root $JBOSS_HOME && chmod -R ug+rwX $JBOSS_HOME
@@ -68,8 +67,7 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: wildfly-runtime:{{ include "wildfly.version" . }}
-        namespace: {{ .Values.wildfly.namespace }}
+        name: {{ include "wildfly.runtimeImage" .}}:{{ include "wildfly.version" . }}
       imageOptimizationPolicy: SkipLayers
     type: Docker
   triggers:

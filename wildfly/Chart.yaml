@@ -1,6 +1,6 @@
 apiVersion: v2
 name: wildfly
-description: A Helm chart for WildFly
+description: A Helm chart to build and deploy WildFly applications 
 
 # A chart can be either an 'application' or a 'library' chart.
 #
