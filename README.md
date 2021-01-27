@@ -3,7 +3,7 @@ Helm Charts for WildFly
 
 # Install Helm Repository
 
-The WildFly Charts can be installed from https://jmesnil.github.io/wildfly-charts/
+The WildFly Charts can be installed from [https://jmesnil.github.io/wildfly-charts/](https://jmesnil.github.io/wildfly-charts/)
 
 ```
 $ helm repo add jmesnil https://jmesnil.github.io/wildfly-charts/
