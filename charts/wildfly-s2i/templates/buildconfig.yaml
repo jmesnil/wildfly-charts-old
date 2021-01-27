@@ -1,14 +1,14 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
+  name: {{ include "wildfly-s2i.appBuilderImage" . }}
   labels:
-{{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appBuilderImage" . }}:latest
+      name: {{ include "wildfly-s2i.appBuilderImage" . }}:latest
   runPolicy: Serial
   source:
     git:
@@ -22,7 +22,7 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
+        name: {{ include "wildfly-s2i.builderImage" . }}:{{ include "wildfly-s2i.version" . }}
       env:
         {{- if .Values.galleon.layers }}
         - name: "GALLEON_PROVISION_LAYERS"
@@ -39,18 +39,18 @@ spec:
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: {{ include "wildfly.appname" . }}
+  name: {{ include "wildfly-s2i.appname" . }}
   labels:
-{{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appname" . }}:latest
+      name: {{ include "wildfly-s2i.appname" . }}:latest
   source:
     type: Docker
     dockerfile: |-
-      FROM {{ include "wildfly.runtimeImage" . }}:{{ include "wildfly.version" . }}
+      FROM {{ include "wildfly-s2i.runtimeImage" . }}:{{ include "wildfly-s2i.version" . }}
       COPY /server $JBOSS_HOME
       USER root
       RUN chown -R jboss:root $JBOSS_HOME && chmod -R ug+rwX $JBOSS_HOME
@@ -59,7 +59,7 @@ spec:
     images:
     - from:
         kind: ImageStreamTag
-        name: {{ include "wildfly.appBuilderImage" . }}:latest
+        name: {{ include "wildfly-s2i.appBuilderImage" . }}:latest
       paths:
       - destinationDir: .
         sourcePath: /s2i-output/server/
@@ -67,13 +67,13 @@ spec:
     dockerStrategy:
       from:
         kind: ImageStreamTag
-        name: {{ include "wildfly.runtimeImage" .}}:{{ include "wildfly.version" . }}
+        name: {{ include "wildfly-s2i.runtimeImage" .}}:{{ include "wildfly-s2i.version" . }}
       imageOptimizationPolicy: SkipLayers
     type: Docker
   triggers:
   - imageChange:
       from:
         kind: ImageStreamTag
-        name: {{ include "wildfly.appBuilderImage" . }}:latest
+        name: {{ include "wildfly-s2i.appBuilderImage" . }}:latest
     type: ImageChange
   - type: ConfigChange

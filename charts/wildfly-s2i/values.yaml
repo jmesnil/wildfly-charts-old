@@ -1,4 +1,4 @@
-# Default values for wildfly.
+# Default values for wildfly-s2i.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 

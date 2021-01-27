@@ -1,48 +1,48 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ include "wildfly.appname" . }}
+  name: {{ include "wildfly-s2i.appname" . }}
   labels:
-{{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
+  name: {{ include "wildfly-s2i.appBuilderImage" . }}
   labels:
-{{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly-s2i.labels" . | nindent 4 }}
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ include "wildfly.builderImage" . }}
+  name: {{ include "wildfly-s2i.builderImage" . }}
   annotations:
     openshift.io/display-name: "WildFly S2I"
 spec:
   tags:
-  - name: "{{ include "wildfly.version" . }}"
+  - name: "{{ include "wildfly-s2i.version" . }}"
     annotations:
       description: wildfly-builder image stream
       iconClass: icon-wildfly
       tags: builder,java,widlfly,galleon
       sampleRepo: https://github.com/openshift/openshift-jee-sample.git
-      version: "{{ include "wildfly.version" . }}"
+      version: "{{ include "wildfly-s2i.version" . }}"
     from:
       kind: DockerImage
-      name: quay.io/wildfly/wildfly-centos7:{{ include "wildfly.version" . }}
+      name: quay.io/wildfly/wildfly-centos7:{{ include "wildfly-s2i.version" . }}
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ include "wildfly.runtimeImage" . }}
+  name: {{ include "wildfly-s2i.runtimeImage" . }}
 spec:
   tags:
-  - name: "{{ include "wildfly.version" . }}"
+  - name: "{{ include "wildfly-s2i.version" . }}"
     annotations:
       description: wildfly-runtime image stream
       iconClass: icon-wildfly
       tags: java,widlfly
-      version: "{{ include "wildfly.version" . }}"
+      version: "{{ include "wildfly-s2i.version" . }}"
     from:
       kind: DockerImage
-      name: quay.io/wildfly/wildfly-runtime-centos7:{{ include "wildfly.version" . }}
+      name: quay.io/wildfly/wildfly-runtime-centos7:{{ include "wildfly-s2i.version" . }}
