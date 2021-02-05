@@ -6,6 +6,8 @@ build:
   mode: bootable-jar
   enabled: true
 deploy:
+  route:
+    enabled: true
   livenessProbe:
     httpGet:
         path: /health/live

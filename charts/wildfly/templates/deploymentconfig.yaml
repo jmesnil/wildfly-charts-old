@@ -32,19 +32,18 @@ spec:
           image: {{ include "wildfly.appName" . }}
           imagePullPolicy: Always
           ports:
-            ports:
-            - name: jolokia
-              containerPort: 8778
-              protocol: TCP
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-            - name: ping
-              containerPort: 8888
-              protocol: TCP
-            - name: admin
-              containerPort: 9990
-              protocol: TCP
+          - name: jolokia
+            containerPort: 8778
+            protocol: TCP
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+          - name: ping
+            containerPort: 8888
+            protocol: TCP
+          - name: admin
+            containerPort: 9990
+            protocol: TCP
           {{- if .Values.deploy.resources }}
           resources:
             {{- toYaml .Values.deploy.resources | nindent 12 }}
@@ -59,13 +58,13 @@ spec:
           {{- end }}
           env:
           - name: JGROUPS_PING_PROTOCOL
-          value: dns.DNS_PING
+            value: dns.DNS_PING
           - name: OPENSHIFT_DNS_PING_SERVICE_PORT
-          value: '8888'
+            value: '8888'
           - name: AUTO_DEPLOY_EXPLODED
-          value: 'false'
+            value: 'false'
           - name: ENABLE_GENERATE_DEFAULT_DATASOURCE
-          value: 'false'
+            value: 'false'
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
             value: {{ include "wildfly.appName" . }}-ping
           {{- if .Values.deploy.env }}
