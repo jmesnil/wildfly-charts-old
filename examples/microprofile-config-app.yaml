@@ -1,0 +1,13 @@
+build:
+  mode: bootable-jar
+  uri: https://github.com/jmesnil/quickstart.git
+  ref: microprofile-config_cloud
+  subDir: microprofile-config  
+  env:
+  - name: MVN_ARGS
+    value: "-Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final"
+deploy:
+  replicas: 3
+  env:
+  - name: CONFIG_PROP
+    value: Hello from OpenShift
