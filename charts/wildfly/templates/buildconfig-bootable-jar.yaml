@@ -12,6 +12,15 @@ spec:
       name: {{ include "wildfly.appName" . }}:latest
   strategy:
     type: Docker
+    dockerStrategy:
+      env:
+      {{- if .Values.build.subDir }}
+      - name: MVN_SUBDIR
+        value: -pl {{ .Values.build.subDir }}
+      {{- end }}
+      {{- if .Values.build.env }}
+      {{- tpl (toYaml .Values.build.env) . | nindent 6 }}
+      {{- end }}
   source:
     type: Git
     git:
@@ -29,19 +38,15 @@ spec:
       
       COPY . /build/ 
 
-      RUN mvn clean package -P bootable-jar
+      RUN mvn clean package -P bootable-jar ${MVN_ARGS} ${MVN_SUBDIR}
 
       FROM registry.access.redhat.com/ubi8/openjdk-11:latest
 
       WORKDIR /deployments/
       
-      COPY --from=builder /build/target/*-bootable.jar /deployments/application.jar
+      COPY --from=builder /build/{{- default "" (printf "%s/" .Values.build.subDir) -}}target/*-bootable.jar /deployments/application.jar
 
       CMD ["java", "-jar", "./application.jar"]
-{{- if .Values.build.env }}
-      env:
-        {{- tpl (toYaml .Values.build.env) . | nindent 8 }}
-{{- end }}
 {{- if .Values.build.resources }}
   resources:
     {{- toYaml .Values.build.resources | nindent 4 }}
