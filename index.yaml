@@ -3,6 +3,16 @@ entries:
   wildfly:
   - apiVersion: v2
     appVersion: "22.0"
+    created: "2021-02-05T14:54:13.96233918Z"
+    description: Build and Deploy WildFly applications on OpenShift
+    digest: bb3bf6ed55a2ce51cb3f779a9dadf3dbfd42557139ff7c6e357c09df8cd737ca
+    name: wildfly
+    type: application
+    urls:
+    - https://github.com/jmesnil/wildfly-charts/releases/download/wildfly-0.9.3/wildfly-0.9.3.tgz
+    version: 0.9.3
+  - apiVersion: v2
+    appVersion: "22.0"
     created: "2021-02-05T14:33:45.165281894Z"
     description: Build and Deploy WildFly applications on OpenShift
     digest: 0bcd517cf610ec446d70d62d4ae18dbf6e7abb1e0e60e67ec04c29dd63715db6
