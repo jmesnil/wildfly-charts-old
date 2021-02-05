@@ -70,9 +70,6 @@
                     "type": "integer",
                     "description": "Number of pod replicas to deploy"
                 },
-                "ports": {
-                    "description": "Freeform service ports configuration"
-                },
                 "resources": {
                     "description": "Freeform resources requirements to deploy the application image"
                 },
