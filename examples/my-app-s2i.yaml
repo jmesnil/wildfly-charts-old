@@ -1,0 +1,10 @@
+build:
+  mode: s2i
+  uri: https://github.com/jmesnil/wildfly-operator-demo-app.git
+  s2i:
+    galleonLayers: 'jaxrs-server,microprofile-platform'
+deploy:
+  replicas: 3
+  env:
+  - name: GREETINGS
+    value: From OpenShift, Bonjour

@@ -1,0 +1,114 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "wildfly": {
+            "type": "object",
+            "properties": {
+                "version": {
+                    "description": "WildFly version. If not specified, the Helm's appVersion will be used instead.",
+                    "type": ["string", "null"]
+                }
+            }
+        },
+        "build": {
+            "description": "Configuration to build the application image",
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "description": "Enable/Disable building the application image",
+                    "type": "boolean",
+                    "default": true
+                },
+                "mode": {
+                    "description": "Which mode to use to build the application",
+                    "type": "string",
+                    "enum": ["s2i", "bootable-jar"],
+                    "default": "bootable-jar"
+                },
+                "uri": {
+                    "description": "URI of GitHub repository",
+                    "type": "string"
+                },
+                "ref": {
+                    "description": "Git reference",
+                    "type": ["string", "null"]
+                },
+                "contextDir": {
+                    "description": "Context directory within your Git repo to use as the root for the build",
+                    "type": ["string", "null"]
+                },
+                "env": {
+                    "description": "Environments Variables to build the application image",
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "resources": {
+                    "description": "Freeform resources field. More information: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+                }
+            }
+        },
+        "deploy": {
+            "description": "Configuration to deploy the application",
+            "type": "object",
+            "properties": {
+                "replicas": {
+                    "type": "integer",
+                    "description": "Number of pod replicas to deploy"
+                },
+                "ports": {
+                    "description": "Freeform service ports configuration"
+                },
+                "resources": {
+                    "description": "Freeform resources requirements to deploy the application image"
+                },
+                "route": {
+                    "description": "Route configuration",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Enable/Disable creating a Route for the application",
+                            "default": true,
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "env": {
+                    "description": "Environments Variables to run application",
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "envFrom": {
+                    "type": ["array", "null"],
+                    "description": "Freeform envFrom field. More information: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables"
+                },
+                "livenessProbe": {
+                    "description": "Freeform livenessProbe configuration"
+                },
+                "readinessProbe": {
+                    "description": "Freeform livenessProbe configuration"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{{- if and .Values.build.enabled (eq .Values.build.mode "bootable-jar") }}
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: {{ include "wildfly.appName" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ include "wildfly.appName" . }}:latest
+  strategy:
+    type: Docker
+  source:
+    type: Git
+    git:
+      ref: {{ .Values.build.ref }}
+      uri: {{ required "Git source repository URL is required" .Values.build.uri }}
+{{- if .Values.build.contextDir }}    
+    contextDir: {{ .Values.build.contextDir }}
+{{- end }}
+    dockerfile: >-
+      FROM registry.access.redhat.com/ubi8/openjdk-11:latest AS builder 
+
+      USER root
+
+      WORKDIR /build/
+      
+      COPY . /build/ 
+
+      RUN mvn clean package -P bootable-jar
+
+      FROM registry.access.redhat.com/ubi8/openjdk-11:latest
+
+      WORKDIR /deployments/
+      
+      COPY --from=builder /build/target/*-bootable.jar /deployments/application.jar
+
+      CMD ["java", "-jar", "./application.jar"]
+{{- if .Values.build.env }}
+      env:
+        {{- tpl (toYaml .Values.build.env) . | nindent 8 }}
+{{- end }}
+{{- if .Values.build.resources }}
+  resources:
+    {{- toYaml .Values.build.resources | nindent 4 }}
+{{- end }}
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial
+{{- end }}

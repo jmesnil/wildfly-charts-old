@@ -1,0 +1,89 @@
+{{- if and .Values.build.enabled (eq .Values.build.mode "s2i") }}
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ include "wildfly.appBuilderImage" . }}
+  labels:
+    {{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ include "wildfly.appBuilderImage" . }}:latest
+  runPolicy: Serial
+  source:
+    git:
+      ref: {{ .Values.build.ref }}
+      uri: {{ required "Git source repository URL is required" .Values.build.uri }}
+    {{- if .Values.build.contextDir }}    
+    contextDir: {{ .Values.build.contextDir }}
+    {{- end }}
+    type: Git
+    {{- if .Values.build.env }}
+    env:
+      {{- tpl (toYaml .Values.build.env) . | nindent 8 }}
+    {{- end }}
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
+      env:
+        {{- if and .Values.build.s2i .Values.build.s2i.galleonLayers }}
+        - name: "GALLEON_PROVISION_LAYERS"
+          value: {{ quote .Values.build.s2i.galleonLayers }}
+        {{- end }}
+        - name: "GALLEON_PROVISION_DEFAULT_FAT_SERVER"
+          value: "true"
+    type: Source
+  {{- if .Values.build.resources }}
+  resources:
+    {{- toYaml .Values.build.resources | nindent 4 }}
+  {{- end }}
+  triggers:
+  - imageChange:
+    type: ImageChange
+  - type: ConfigChange
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: {{ include "wildfly.appName" . }}
+  labels:
+    {{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ include "wildfly.appName" . }}:latest
+  source:
+    type: Docker
+    dockerfile: |-
+      FROM {{ include "wildfly.runtimeImage" . }}:{{ include "wildfly.version" . }}
+      COPY /server $JBOSS_HOME
+      USER root
+      RUN chown -R jboss:root $JBOSS_HOME && chmod -R ug+rwX $JBOSS_HOME
+      USER jboss
+      CMD $JBOSS_HOME/bin/openshift-launch.sh
+    images:
+    - from:
+        kind: ImageStreamTag
+        name: {{ include "wildfly.appBuilderImage" . }}:latest
+      paths:
+      - destinationDir: .
+        sourcePath: /s2i-output/server/
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: {{ include "wildfly.runtimeImage" .}}:{{ include "wildfly.version" . }}
+      imageOptimizationPolicy: SkipLayers
+    type: Docker
+  triggers:
+  - imageChange:
+      from:
+        kind: ImageStreamTag
+        name: {{ include "wildfly.appBuilderImage" . }}:latest
+    type: ImageChange
+  - type: ConfigChange
+{{ end }}

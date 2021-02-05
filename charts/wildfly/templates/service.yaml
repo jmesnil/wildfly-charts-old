@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "wildfly.appName" . }}
+  labels:
+  {{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+  {{- include "wildfly.selectorLabels" . | nindent 4 }}
+  type: ClusterIP
+  sessionAffinity: None
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "wildfly.appName" . }}-ping
+  labels:
+  {{- include "wildfly.labels" . | nindent 4 }}
+  annotations:
+    description: The JGroups ping port for clustering.
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: ping
+      protocol: TCP
+      port: 8888
+      targetPort: 8888
+  selector:
+  {{- include "wildfly.selectorLabels" . | nindent 4 }}
+  type: ClusterIP
+  sessionAffinity: None
+  publishNotReadyAddresses: true

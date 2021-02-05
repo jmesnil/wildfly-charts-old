@@ -1,0 +1,54 @@
+{{- if and .Values.build.enabled (eq .Values.build.mode "s2i") }}
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.builderImage" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+  annotations:
+    openshift.io/display-name: "WildFly S2I"
+spec:
+  tags:
+  - name: "{{ include "wildfly.version" . }}"
+    annotations:
+      description: wildfly-builder image stream
+      iconClass: icon-wildfly
+      tags: builder,java,widlfly,galleon
+      sampleRepo: https://github.com/openshift/openshift-jee-sample.git
+      version: "{{ include "wildfly.version" . }}"
+    from:
+      kind: DockerImage
+      name: quay.io/wildfly/wildfly-centos7:{{ include "wildfly.version" . }}
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.runtimeImage" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  tags:
+  - name: "{{ include "wildfly.version" . }}"
+    annotations:
+      description: wildfly-runtime image stream
+      iconClass: icon-wildfly
+      tags: java,widlfly
+      version: "{{ include "wildfly.version" . }}"
+    from:
+      kind: DockerImage
+      name: quay.io/wildfly/wildfly-runtime-centos7:{{ include "wildfly.version" . }}
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.appBuilderImage" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+---
+{{ end }}
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: {{ include "wildfly.appName" . }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}

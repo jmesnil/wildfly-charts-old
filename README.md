@@ -15,15 +15,3 @@ jmesnil/wildfly         0.8.1           22.0            A Helm chart to build an
 
 # Install Helm Chart
 This will build an application image from a Git repository.
-
-The only required parameter is `source.uri`.
-The version of WildFly image can be set with `wildfly.version`. If unspecifiec, it defaults
-to the app version of the Helm Chart.
-
-```
-helm install my-wildfly-app jmesnil/wildfly \
-    --set build.uri=https://github.com/wildfly/quickstart.git \
-    --set build.ref=22.0.0.Final \
-    --set build.contextDir=microprofile-config \
-    --set build.s2i.galleonLayers="jaxrs-server\,microprofile-platform"
-```

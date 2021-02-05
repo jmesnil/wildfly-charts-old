@@ -1,0 +1,44 @@
+# Default values for wildfly
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+build:
+  mode: bootable-jar
+  enabled: true
+deploy:
+  resources:
+    limits:
+      memory: 1Gi
+  ports:
+  - name: jolokia
+    containerPort: 8778
+    protocol: TCP
+  - name: http
+    containerPort: 8080
+    protocol: TCP
+  - name: ping
+    containerPort: 8888
+    protocol: TCP
+  - name: admin
+    containerPort: 9990
+    protocol: TCP
+  route:
+    enabled: true
+    targetPort: http
+  livenessProbe:
+    httpGet:
+        path: /health/live
+        port: admin
+  readinessProbe:
+    httpGet:
+        path: /health/ready
+        port: admin
+  internalEnv:
+  - name: JGROUPS_PING_PROTOCOL
+    value: dns.DNS_PING
+  - name: OPENSHIFT_DNS_PING_SERVICE_PORT
+    value: '8888'
+  - name: AUTO_DEPLOY_EXPLODED
+    value: 'false'
+  - name: ENABLE_GENERATE_DEFAULT_DATASOURCE
+    value: 'false'

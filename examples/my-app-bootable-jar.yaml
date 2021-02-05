@@ -1,0 +1,8 @@
+build:
+  mode: bootable-jar
+  uri: https://github.com/jmesnil/wildfly-operator-demo-app.git
+deploy:
+  replicas: 3
+  env:
+  - name: GREETINGS
+    value: From OpenShift, Bonjour
