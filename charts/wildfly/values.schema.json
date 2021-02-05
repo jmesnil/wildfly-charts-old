@@ -3,7 +3,7 @@
     "type": "object",
     "properties": {
         "wildfly": {
-            "type": "object",
+            "type": ["object", "null"],
             "properties": {
                 "version": {
                     "description": "WildFly version. If not specified, the Helm's appVersion will be used instead.",

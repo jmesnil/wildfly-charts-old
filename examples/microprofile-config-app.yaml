@@ -4,8 +4,8 @@ build:
   ref: microprofile-config_cloud
   subDir: microprofile-config  
   env:
-  - name: MVN_ARGS
-    value: "-Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final"
+  - name: MAVEN_ARGS_APPEND
+    value: -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
 deploy:
   replicas: 3
   env:

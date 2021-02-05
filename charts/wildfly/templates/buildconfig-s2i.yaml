@@ -19,23 +19,22 @@ spec:
     contextDir: {{ .Values.build.contextDir }}
     {{- end }}
     type: Git
-    {{- if .Values.build.env }}
-    env:
-      {{- tpl (toYaml .Values.build.env) . | nindent 8 }}
-    {{- end }}
   strategy:
+    type: Source
     sourceStrategy:
       from:
         kind: ImageStreamTag
         name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
       env:
-        {{- if and .Values.build.s2i .Values.build.s2i.galleonLayers }}
-        - name: "GALLEON_PROVISION_LAYERS"
-          value: {{ quote .Values.build.s2i.galleonLayers }}
-        {{- end }}
-        - name: "GALLEON_PROVISION_DEFAULT_FAT_SERVER"
-          value: "true"
-    type: Source
+      - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
+        value: "true"
+      {{- if and .Values.build.s2i .Values.build.s2i.galleonLayers }}
+      - name: "GALLEON_PROVISION_LAYERS"
+        value: {{ quote .Values.build.s2i.galleonLayers }}
+      {{- end }}
+      {{- if .Values.build.env }}
+      {{- toYaml .Values.build.env | nindent 6 }}
+      {{- end }}
   {{- if .Values.build.resources }}
   resources:
     {{- toYaml .Values.build.resources | nindent 4 }}

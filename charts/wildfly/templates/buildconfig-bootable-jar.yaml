@@ -15,7 +15,7 @@ spec:
     dockerStrategy:
       env:
       {{- if .Values.build.subDir }}
-      - name: MVN_SUBDIR
+      - name: MAVEN_SUBDIR
         value: -pl {{ .Values.build.subDir }}
       {{- end }}
       {{- if .Values.build.env }}
@@ -38,7 +38,7 @@ spec:
       
       COPY . /build/ 
 
-      RUN mvn clean package -P bootable-jar ${MVN_ARGS} ${MVN_SUBDIR}
+      RUN mvn clean package -P bootable-jar ${MAVEN_SUBDIR} ${MAVEN_ARGS_APPEND}
 
       FROM registry.access.redhat.com/ubi8/openjdk-11:latest
 
