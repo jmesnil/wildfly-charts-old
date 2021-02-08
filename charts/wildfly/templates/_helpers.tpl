@@ -14,21 +14,36 @@ Expand the name of the chart.
 {{- end }}
 {{- end }}
 
+{{/*
+wildfly.appBuilderImage corresponds to the imagestram for the application Builder image
+*/}}
 {{- define "wildfly.appBuilderImage" -}}
 {{- include "wildfly.appName" . }}-build-artifacts
 {{- end }}
 
-
+{{/*
+wildfly.builderImage corresponds to the imagestram for WildFly Builder Image
+*/}}
 {{- define "wildfly.builderImage" -}}
 {{- include "wildfly.appName" . }}-builder
 {{- end }}
 
+{{/*
+wildfly.runtimeImage corresponds to the imagestram for WildFly Runtime Image
+*/}}
 {{- define "wildfly.runtimeImage" -}}
 {{- include "wildfly.appName" . }}-runtime
 {{- end }}
 
+{{/*
+If wildfly.version is not defined, use by defaul the Chart's appVersion
+*/}}
 {{- define "wildfly.version" -}}
+{{- if .Values.wildfly }}
 {{- default .Chart.AppVersion .Values.wildfly.version }}
+{{- else }}
+{{  .Chart.AppVersion }}
+{{- end }}
 {{- end }}
 
 {{/*

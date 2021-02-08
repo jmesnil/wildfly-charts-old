@@ -15,7 +15,6 @@ spec:
           - {{ include "wildfly.appName" . }}
         from:
           kind: ImageStreamTag
-          namespace: default
           name: {{ include "wildfly.appName" . }}:latest
     - type: ConfigChange
   replicas: {{ .Values.deploy.replicas }}

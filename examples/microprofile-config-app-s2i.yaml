@@ -1,0 +1,12 @@
+build:
+  mode: s2i
+  uri: https://github.com/wildfly/quickstart.git
+  ref: 22.0.0.Final
+  subDir: microprofile-config
+  s2i:
+    galleonLayers: 'jaxrs-server,microprofile-platform'
+deploy:
+  replicas: 3
+  env:
+  - name: CONFIG_PROP
+    value: Hello from OpenShift
