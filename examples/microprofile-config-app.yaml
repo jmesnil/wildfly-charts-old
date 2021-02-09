@@ -1,11 +1,12 @@
 build:
   mode: bootable-jar
-  uri: https://github.com/jmesnil/quickstart.git
-  ref: microprofile-config_cloud
-  subDir: microprofile-config  
+  uri: https://github.com/wildfly/quickstart.git
+  ref: 22.0.0.Final
   env:
+  - name: ARTIFACT_DIR
+    value: microprofile-config
   - name: MAVEN_ARGS_APPEND
-    value: -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
+    value: -am -pl microprofile-config -Pbootable-jar
 deploy:
   replicas: 3
   env:
