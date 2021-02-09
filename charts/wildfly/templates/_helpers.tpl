@@ -25,14 +25,14 @@ wildfly.appBuilderImage corresponds to the imagestram for the application Builde
 wildfly.builderImage corresponds to the imagestram for WildFly Builder Image
 */}}
 {{- define "wildfly.builderImage" -}}
-{{- include "wildfly.appName" . }}-builder
+{{- include "wildfly.appName" . }}-wildfly-builder
 {{- end }}
 
 {{/*
 wildfly.runtimeImage corresponds to the imagestram for WildFly Runtime Image
 */}}
 {{- define "wildfly.runtimeImage" -}}
-{{- include "wildfly.appName" . }}-runtime
+{{- include "wildfly.appName" . }}-wildfly-runtime
 {{- end }}
 
 {{/*

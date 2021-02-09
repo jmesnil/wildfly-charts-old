@@ -34,13 +34,15 @@ spec:
         value: "true"
       {{- if .Values.build.s2i }}
       {{- if .Values.build.s2i.galleonLayers }}
-      - name: "GALLEON_PROVISION_LAYERS"
+      - name: GALLEON_PROVISION_LAYERS
         value: {{ quote .Values.build.s2i.galleonLayers }}
       {{- end }}
       {{- end }}
       {{- if .Values.build.env }}
       {{- toYaml .Values.build.env | nindent 6 }}
       {{- end }}
+      incremental: true
+      forcePull: true
   {{- if .Values.build.resources }}
   resources:
     {{- toYaml .Values.build.resources | nindent 4 }}
