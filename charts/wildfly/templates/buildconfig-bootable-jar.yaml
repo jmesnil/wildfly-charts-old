@@ -26,9 +26,9 @@ spec:
     git:
       ref: {{ .Values.build.ref }}
       uri: {{ required "Git source repository URL is required" .Values.build.uri }}
-  {{- if .Values.build.contextDir }}
+    {{- if .Values.build.contextDir }}
     contextDir: {{ .Values.build.contextDir }}
-  {{- end }}
+    {{- end }}
   {{- if .Values.build.resources }}
   resources:
     {{- toYaml .Values.build.resources | nindent 4 }}

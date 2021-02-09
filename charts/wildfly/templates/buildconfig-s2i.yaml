@@ -13,11 +13,15 @@ spec:
   runPolicy: Serial
   source:
     git:
-      ref: {{ .Values.build.ref }}
+      ref: {{ quote .Values.build.ref }}
       uri: {{ required "Git source repository URL is required" .Values.build.uri }}
     {{- if .Values.build.contextDir }}    
     contextDir: {{ .Values.build.contextDir }}
     {{- end }}
+    {{- if .Values.build.images }}
+    images:
+      {{- tpl (toYaml .Values.build.images) . | nindent 6 }}
+    {{- end}}
     type: Git
   strategy:
     type: Source
@@ -28,9 +32,11 @@ spec:
       env:
       - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
         value: "true"
-      {{- if and .Values.build.s2i .Values.build.s2i.galleonLayers }}
+      {{- if .Values.build.s2i }}
+      {{- if .Values.build.s2i.galleonLayers }}
       - name: "GALLEON_PROVISION_LAYERS"
         value: {{ quote .Values.build.s2i.galleonLayers }}
+      {{- end }}
       {{- end }}
       {{- if .Values.build.env }}
       {{- toYaml .Values.build.env | nindent 6 }}

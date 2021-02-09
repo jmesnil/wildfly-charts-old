@@ -4,7 +4,9 @@ build:
   ref: 22.0.0.Final
   env:
   - name: ARTIFACT_DIR
-    value: microprofile-config
+    value: microprofile-config/target
+  - name: MAVEN_OPTS
+    value: -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=512m
   - name: MAVEN_ARGS_APPEND
     value: -am -pl microprofile-config -Pbootable-jar
 deploy:
