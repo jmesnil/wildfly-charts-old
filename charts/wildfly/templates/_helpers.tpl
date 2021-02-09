@@ -39,12 +39,12 @@ wildfly.runtimeImage corresponds to the imagestram for WildFly Runtime Image
 If wildfly.version is not defined, use by defaul the Chart's appVersion
 */}}
 {{- define "wildfly.version" -}}
-{{- if .Values.wildfly }}
-{{- default .Chart.AppVersion .Values.wildfly.version }}
-{{- else }}
-{{  .Chart.AppVersion }}
-{{- end }}
-{{- end }}
+{{- if .Values.wildfly -}}
+{{- default .Chart.AppVersion .Values.wildfly.version -}}
+{{- else -}}
+{{- .Chart.AppVersion -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
