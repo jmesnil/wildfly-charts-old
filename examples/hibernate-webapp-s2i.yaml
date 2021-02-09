@@ -9,8 +9,8 @@ build:
         namespace: openshift
         name: jboss-datavirt64-driver-openshift:1.7
       paths:
-        - sourcePath: /extensions
-          destinationDir: datavirt/hibernate-webapp/extensions/extras
+        - sourcePath: /extensions/.
+          destinationDir: ./datavirt/hibernate-webapp/extensions/extras
   env:
   - name: CUSTOM_INSTALL_DIRECTORIES
     value: extensions/*

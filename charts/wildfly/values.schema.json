@@ -38,10 +38,6 @@
                     "description": "Context directory within your Git repo to use as the root for the build",
                     "type": ["string", "null"]
                 },
-                "subDir": {
-                    "description": "If the application is in a Maven module, the application will be taken from this subdir's target",
-                    "type": ["string", "null"]
-                },
                 "env": {
                     "description": "Environments Variables to build the application image",
                     "type": ["array", "null"],
@@ -59,6 +55,9 @@
                 },
                 "resources": {
                     "description": "Freeform resources field. More information: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+                },
+                "images": {
+                    "description": "Freeform images to inject during the S2I build."
                 }
             }
         },
