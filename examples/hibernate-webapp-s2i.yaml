@@ -1,3 +1,5 @@
+# This release installs a Java applications that connects to a DB installed on OpenShift.
+# The DB drivers are injected during s2i build using the jboss-datavirt64-driver-openshift image
 build:
   mode: s2i
   uri: https://github.com/jboss-openshift/openshift-quickstarts

@@ -8,9 +8,7 @@ build:
   - name: ARTIFACT_DIR
     value: microprofile-config/target
   - name: MAVEN_ARGS_APPEND
-    value: -am -pl microprofile-config -Pbootable-jar -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
-  - name: MAVEN_OPTS
-    value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
+    value: -am -pl microprofile-config
 deploy:
   replicas: 3
   env:

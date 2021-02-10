@@ -57,7 +57,17 @@
                     "description": "Freeform resources field. More information: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
                 },
                 "images": {
-                    "description": "Freeform images to inject during the S2I build."
+                    "description": "Freeform images injected in the source during build."
+                },
+                "s2i": {
+                    "description": "Configuration specific to S2I Build (applicable only if build mode is set to s2i)",
+                    "type": ["object", "null"],
+                    "properties": {
+                        "galleonLayers": {
+                            "description": "List of Galleon Layers to provisions (separated by commas)",
+                            "type": ["string", "null"]
+                        }
+                    }
                 }
             }
         },
