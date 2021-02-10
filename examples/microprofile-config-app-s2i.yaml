@@ -9,6 +9,8 @@ build:
     value: microprofile-config/target
   - name: MAVEN_ARGS_APPEND
     value: -am -pl microprofile-config
+  - name: MAVEN_OPTS
+    value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
 deploy:
   replicas: 3
   env:
