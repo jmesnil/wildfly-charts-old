@@ -55,6 +55,12 @@ spec:
           readinessProbe:
             {{- tpl (toYaml .Values.deploy.readinessProbe) . | nindent 12 }}
           {{- end }}
+          {{- if (lookup "v1" "Secret" .Release.Namespace "wildfly-extensions") }}
+          volumeMounts:
+          - name: wildfly-extensions
+            mountPath: /etc/extensions
+            readOnly: true
+          {{- end }}
           env:
           - name: JGROUPS_PING_PROTOCOL
             value: dns.DNS_PING
@@ -66,6 +72,8 @@ spec:
             value: 'false'
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
             value: {{ include "wildfly.appName" . }}-ping
+          - name: ENV_FILES
+            value: /etc/extensions/*
           {{- if .Values.deploy.env }}
           {{- tpl (toYaml .Values.deploy.env) . | nindent 10 }}
           {{- end }}
@@ -73,3 +81,9 @@ spec:
           envFrom:
           {{- tpl (toYaml .Values.deploy.envFrom) . | nindent 10 }}
           {{- end }}
+      {{- if (lookup "v1" "Secret" .Release.Namespace "wildfly-extensions") }}
+      volumes:
+      - name: wildfly-extensions
+        secret:
+          secretName: wildfly-extensions
+      {{- end }}

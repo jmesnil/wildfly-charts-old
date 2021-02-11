@@ -1,0 +1,17 @@
+# Deploy a Java application that connects to PostgreSQL
+
+# Prerequisites
+
+# Deploy a PostgreSQL DB on OpenShift
+
+Using the "PostgreSQL (Ephemeral)" template with the parameters:
+
+* Database Service Name: `kitchensink-db`
+* PostgreSQL Database Name: `kitchensink`
+
+# Install a release of Helm Charts:
+
+```
+$ helm install kitchensink-app -f examples/postgresql/kitchensink-s2i.yaml ./charts/wildfly
+```
+

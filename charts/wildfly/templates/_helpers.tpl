@@ -22,17 +22,17 @@ wildfly.appBuilderImage corresponds to the imagestram for the application Builde
 {{- end }}
 
 {{/*
-wildfly.builderImage corresponds to the imagestram for WildFly Builder Image
+wildfly.builderImage corresponds to the name of the WildFly Builder Image
 */}}
 {{- define "wildfly.builderImage" -}}
-{{- include "wildfly.appName" . }}-wildfly-builder
+quay.io/wildfly/wildfly-centos7
 {{- end }}
 
 {{/*
-wildfly.runtimeImage corresponds to the imagestram for WildFly Runtime Image
+wildfly.runtimeImage corresponds to the name of the WildFly Runtime Image
 */}}
 {{- define "wildfly.runtimeImage" -}}
-{{- include "wildfly.appName" . }}-wildfly-runtime
+quay.io/wildfly/wildfly-runtime-centos7
 {{- end }}
 
 {{/*

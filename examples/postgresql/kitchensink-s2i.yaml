@@ -1,0 +1,51 @@
+# This release installs a Java applications that connects to a DB installed on OpenShift.
+build:
+  mode: s2i
+  uri: https://github.com/jmesnil/quickstart.git
+  ref: kitchensink_postgresql
+  images:
+    - from:
+        kind: DockerImage
+        name: quay.io/jmesnil/postgresql-driver-jboss-module:latest
+      paths:
+        - sourcePath: /extensions/.
+          destinationDir: ./extensions/postgresql
+  env:
+  - name: ARTIFACT_DIR
+    value: kitchensink/target
+  - name: MAVEN_ARGS_APPEND
+    value: -am -pl kitchensink -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
+  - name: MAVEN_OPTS
+    value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
+  - name: SCRIPT_DEBUG
+    value: "true"
+deploy:
+  replicas: 2
+  env:
+  - name: DATASOURCES
+    value: PGSQL
+  - name: PGSQL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        key: database-name
+        name: kitchensink-db
+  - name: PGSQL_USERNAME
+    valueFrom:
+      secretKeyRef:
+        key: database-user
+        name: kitchensink-db
+  - name: PGSQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: database-password
+        name: kitchensink-db
+  - name: PGSQL_DRIVER
+    value: postgres
+  - name: PGSQL_JNDI
+    value: java:jboss/datasources/KitchensinkAngularJSQuickstartDS
+  - name: PGSQL_JTA
+    value: "false"
+  - name: PGSQL_NONXA
+    value: "true"
+  - name: PGSQL_URL
+    value: "jdbc:postgresql://kitchensink-db:5432/kitchensink"

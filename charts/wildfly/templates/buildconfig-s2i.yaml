@@ -27,11 +27,13 @@ spec:
     type: Source
     sourceStrategy:
       from:
-        kind: ImageStreamTag
+        kind: DockerImage
         name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
       env:
       - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
         value: "true"
+      - name: CUSTOM_INSTALL_DIRECTORIES
+        value: extensions/*
       {{- if .Values.build.s2i }}
       {{- if .Values.build.s2i.galleonLayers }}
       - name: GALLEON_PROVISION_LAYERS
@@ -82,7 +84,7 @@ spec:
   strategy:
     dockerStrategy:
       from:
-        kind: ImageStreamTag
+        kind: DockerImage
         name: {{ include "wildfly.runtimeImage" .}}:{{ include "wildfly.version" . }}
       imageOptimizationPolicy: SkipLayers
     type: Docker
