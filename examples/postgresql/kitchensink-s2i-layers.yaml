@@ -5,7 +5,7 @@ build:
   #       if the kitchensink app no longer embeds a ds.xml that connects
   #       to an in-vm Derby DB
   uri: https://github.com/jmesnil/quickstart.git
-  ref: kitchensink_postgresql
+  ref: kitchensink_openshift
   env:
   - name: ARTIFACT_DIR
     value: kitchensink/target
@@ -15,8 +15,9 @@ build:
     value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
   - name: SCRIPT_DEBUG
     value: "true"
-  s2i:
-    galleonLayers: cloud-server,postgresql-datasource,jsf,ejb
+# provisioning.xml is provided
+#  s2i:
+#    galleonLayers: cloud-server,postgresql-datasource,jsf,ejb
 deploy:
   replicas: 2
   env:
