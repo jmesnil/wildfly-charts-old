@@ -1,0 +1,44 @@
+# This release installs a Java applications that connects to a DB installed on OpenShift.
+build:
+  mode: s2i
+  # TODO: use https://github.com/wildfly/quickstart.git @ master
+  #       if the kitchensink app no longer embeds a ds.xml that connects
+  #       to an in-vm Derby DB
+  uri: https://github.com/jmesnil/quickstart.git
+  ref: kitchensink_postgresql
+  env:
+  - name: ARTIFACT_DIR
+    value: kitchensink/target
+  - name: MAVEN_ARGS_APPEND
+    value: -am -pl kitchensink -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
+  - name: MAVEN_OPTS
+    value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
+  - name: SCRIPT_DEBUG
+    value: "true"
+  s2i:
+    galleonLayers: cloud-server,postgresql-datasource,jsf,ejb
+deploy:
+  replicas: 2
+  env:
+  # TODO the Chart should validate the presence of a secret named kitchensink-db
+  - name: POSTGRESQL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        key: database-name
+        name: kitchensink-db
+  - name: POSTGRESQL_USER
+    valueFrom:
+      secretKeyRef:
+        key: database-user
+        name: kitchensink-db
+  - name: POSTGRESQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: database-password
+        name: kitchensink-db
+  - name: POSTGRESQL_DATASOURCE
+    value: KitchensinkQuickstartDS
+  - name: POSTGRESQL_SERVICE_HOST
+    value: kitchensink-db
+  - name: POSTGRESQL_SERVICE_PORT
+    value: "5432"
