@@ -1,0 +1,87 @@
+# This release installs a Java applications that connects to a DB installed on OpenShift.
+build:
+  mode: s2i
+  # TODO: use https://github.com/wildfly/quickstart.git @ master
+  #       if the kitchensink app no longer embeds a ds.xml that connects
+  #       to an in-vm Derby DB
+  uri: https://github.com/jmesnil/quickstart.git
+  ref: todo-backend
+  env:
+  - name: ARTIFACT_DIR
+    value: todo-backend/target
+  - name: MAVEN_ARGS_APPEND
+    value: -am -pl todo-backend -Dversion.server.bom=22.0.0.Final -Dversion.microprofile.bom=22.0.0.Final
+  - name: MAVEN_OPTS
+    value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
+  s2i:
+    galleonLayers: cloud-server,postgresql-datasource,ejb
+deploy:
+  replicas: 1
+  env:
+  # Env vars for CORS
+  - name: FILTERS
+    value: server_header, powered_by, acao, acam, acah, acac, acma
+  - name: server_header_FILTER_RESPONSE_HEADER_NAME
+    value: Server
+  - name: server_header_FILTER_RESPONSE_HEADER_VALUE
+    value: WildFly/22
+  - name: server_header_FILTER_REF_NAME
+    value: server-header
+  - name: powered_by_FILTER_RESPONSE_HEADER_NAME
+    value: X-Powered-By
+  - name: powered_by_FILTER_RESPONSE_HEADER_VALUE
+    value: Undertow/2
+  - name: powered_by_FILTER_REF_NAME
+    value: x-powered-by-header
+  - name: acao_FILTER_RESPONSE_HEADER_NAME
+    value: Access-Control-Allow-Origin
+  - name: acao_FILTER_RESPONSE_HEADER_VALUE
+    value: "*"
+  - name: acao_FILTER_REF_NAME
+    value: Access-Control-Allow-Origin
+  - name: acam_FILTER_RESPONSE_HEADER_NAME
+    value: Access-Control-Allow-Methods
+  - name: acam_FILTER_RESPONSE_HEADER_VALUE
+    value: GET, POST, OPTION, PUT, DELETE, PATCH
+  - name: acam_FILTER_REF_NAME
+    value: Access-Control-Allow-Methods
+  - name: acah_FILTER_RESPONSE_HEADER_NAME
+    value: Access-Control-Allow-Headers
+  - name: acah_FILTER_RESPONSE_HEADER_VALUE
+    value: accept, authorization, content-type, x-requested-with
+  - name: acah_FILTER_REF_NAME
+    value: Access-Control-Allow-Headers
+  - name: acac_FILTER_RESPONSE_HEADER_NAME
+    value: Access-Control-Allow-Credentials
+  - name: acac_FILTER_RESPONSE_HEADER_VALUE
+    value: "true"
+  - name: acac_FILTER_REF_NAME
+    value: Access-Control-Allow-Credentials
+  - name: acma_FILTER_RESPONSE_HEADER_NAME
+    value: Access-Control-Max-Age
+  - name: acma_FILTER_RESPONSE_HEADER_VALUE
+    value: "1"
+  - name: acma_FILTER_REF_NAME
+    value: Access-Control-Max-Age
+  # Env vars to connect to PostgreSQL DB
+  - name: POSTGRESQL_DATABASE
+    valueFrom:
+      secretKeyRef:
+        key: database-name
+        name: todos-db
+  - name: POSTGRESQL_USER
+    valueFrom:
+      secretKeyRef:
+        key: database-user
+        name: todos-db
+  - name: POSTGRESQL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: database-password
+        name: todos-db
+  - name: POSTGRESQL_DATASOURCE
+    value: ToDos
+  - name: POSTGRESQL_SERVICE_HOST
+    value: todos-db
+  - name: POSTGRESQL_SERVICE_PORT
+    value: "5432"
