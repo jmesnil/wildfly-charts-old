@@ -3,8 +3,10 @@
 # Declare variables to be passed into your templates.
 
 build:
-  mode: bootable-jar
   enabled: true
+  mode: bootable-jar
+  bootableJar:
+    artifactDir: target
 deploy:
   route:
     enabled: true

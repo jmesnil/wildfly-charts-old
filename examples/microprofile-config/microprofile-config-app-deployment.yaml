@@ -1,0 +1,21 @@
+# For this example, the image will not be built by Helm Charts but must be provided
+# otherwise.
+# We use the microprofile-config-app quickstart at 
+#https://github.com/wildfly/quickstart/tree/master/microprofile-config
+# and build a binary Docker image for it:
+#
+# $ mvn clean package -Pbootable-jar-openshift -Djkube.skip=true
+# $ mkdir target/openshift && cp target/microprofile-config-bootable.jar target/openshift
+# $ oc import-image ubi8/openjdk-11 --from=registry.redhat.io/ubi8/openjdk-11 --confirm imagestream.image.openshift.io/openjdk-11 imported
+# $ oc new-build --strategy source --binary --image-stream openjdk-11 --name microprofile-config-app
+# $ oc start-build microprofile-config-app --from-dir target/openshift
+#
+# The application image will be put in the `microprofile-config-app` imagestream.
+# So the name of the installed Helm chart must match it and be named `microprofile-config-app`
+build:
+  enabled: false
+deploy:
+  replicas: 1
+  env:
+  - name: CONFIG_PROP
+    value: Hello from OpenShift
