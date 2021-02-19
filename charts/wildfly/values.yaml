@@ -6,7 +6,7 @@ build:
   enabled: true
   mode: bootable-jar
   bootableJar:
-    artifactDir: target
+    builderImage: registry.access.redhat.com/ubi8/openjdk-11:latest
 deploy:
   route:
     enabled: true

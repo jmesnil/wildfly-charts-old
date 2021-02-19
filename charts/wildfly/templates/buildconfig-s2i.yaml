@@ -41,7 +41,7 @@ spec:
       {{- end }}
       {{- end }}
       {{- if .Values.build.env }}
-      {{- toYaml .Values.build.env | nindent 6 }}
+      {{- tpl (toYaml .Values.build.env) . | nindent 6 }}
       {{- end }}
       incremental: true
       forcePull: true
