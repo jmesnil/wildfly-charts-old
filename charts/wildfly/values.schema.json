@@ -277,17 +277,6 @@
                 "resources": {
                     "description": "Freeform resources requirements to deploy the application image"
                 },
-                "route": {
-                    "description": "Route configuration",
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "description": "Enable/Disable creating a Route for the application",
-                            "default": true,
-                            "type": "boolean"
-                        }
-                    }
-                },
                 "env": {
                     "description": "List of environment variables to set in the container. Cannot be updated.",
                     "items": {
@@ -475,6 +464,17 @@
                       "array",
                       "null"
                     ]
+                },
+                "route": {
+                    "description": "Route configuration",
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "description": "Enable/Disable creating a Route for the application",
+                            "default": true,
+                            "type": "boolean"
+                        }
+                    }
                 },
                 "livenessProbe": {
                     "description": "Freeform livenessProbe configuration"
