@@ -1,12 +1,8 @@
 image:
-  ## Name of the image you want to build/deploy
-  ## Defaults to the release name
-  name:
-    ## Tag that you want to build/deploy
   tag: latest
 build:
   enabled: true
-  mode: bootable-jar
+  mode: s2i
   bootableJar:
     builderImage: registry.access.redhat.com/ubi8/openjdk-11:latest
   s2i:
