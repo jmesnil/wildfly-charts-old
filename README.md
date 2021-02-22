@@ -10,21 +10,10 @@ $ helm repo add jmesnil https://jmesnil.github.io/wildfly-charts/
 "jmesnil" has been added to your repositories
 $ helm search repo wildfly
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-...
-jmesnil/wildfly-s2i     0.8.1           22.0            Build WildFly applications with S2I
+jmesnil/wildfly         0.9.7           22.0            A Helm chart to build and deploy WildFly applic...
 ````
 
 # Install Helm Chart
 This will build an application image from a Git repository.
 
-The only required parameter is `source.uri`.
-The version of WildFly image can be set with `wildfly.version`. If unspecifiec, it defaults
-to the app version of the Helm Chart.
-
-```
-helm install my-wildfly-app jmesnil/wildfly-s2i \
-    --set source.uri=https://github.com/wildfly/quickstart.git \
-    --set source.ref=22.0.0.Final \
-    --set source.contextDir=microprofile-config \
-    --set galleon.layers="jaxrs-server\,microprofile-platform"
-```
+A complete documentation of this Chart is available in [https://github.com/jmesnil/wildfly-charts/blob/main/charts/wildfly/README.md](the Chart's README).
