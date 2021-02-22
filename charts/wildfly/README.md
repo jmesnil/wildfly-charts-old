@@ -34,8 +34,8 @@ The configuration to build the application image is configured in a `build` sect
 | `build.images`| Freeform images injected in the source during build | - | [OpenShift documentation](https://docs.openshift.com/container-platform/4.6/builds/creating-build-inputs.html#builds-define-build-inputs_creating-build-inputs) |
 | `build.s2i` | Configuration specific to building with WildFly S2I images | - | - |
 | `build.s2i.version` | Version of the WildFly S2I images. | Defaults to this chart `AppVersion` | - |
-| `build.s2i.builderImage` | WildFly S2I Builder image | quay.io/wildfly/wildfly-centos7 | [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i)  |
-| `build.s2i.runtimeImage` | WildFly S2I Runtime image | quay.io/wildfly/wildfly-runtime-centos7 | [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i) |
+| `build.s2i.builderImage` | WildFly S2I Builder image | [quay.io/wildfly/wildfly-centos7](https://quay.io/wildfly/wildfly-centos7) | [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i)  |
+| `build.s2i.runtimeImage` | WildFly S2I Runtime image | [quay.io/wildfly/wildfly-runtime-centos7](https://quay.io/wildfly/wildfly-runtime-centos7) | [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i) |
 | `build.s2i.galleonLayers` | A comma separated list of layer names to compose a WildFly server | - |  [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i) |
 
 ## Deploying the Application
