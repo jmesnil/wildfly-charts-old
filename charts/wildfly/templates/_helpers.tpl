@@ -15,35 +15,45 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
+wildfly.appImage is the name of the application image that is built/deployed
+*/}}
+{{- define "wildfly.appImage" -}}
+{{ default (include "wildfly.appName" .) .Values.image.name }}
+{{- end -}}
+
+{{/*
+wildfly.appImageStreamTag is image stream of of the application image that is built/deployed
+*/}}
+{{- define "wildfly.appImageStreamTag" -}}
+{{ include "wildfly.appImage" . }}:{{ .Values.image.tag}}
+{{- end -}}
+
+{{/*
 wildfly.appBuilderImage corresponds to the imagestram for the application Builder image
 */}}
 {{- define "wildfly.appBuilderImage" -}}
-{{- include "wildfly.appName" . }}-build-artifacts
+{{ include "wildfly.appImage" . }}-build-artifacts
 {{- end }}
 
 {{/*
 wildfly.builderImage corresponds to the name of the WildFly Builder Image
 */}}
 {{- define "wildfly.builderImage" -}}
-quay.io/wildfly/wildfly-centos7
+{{ .Values.build.s2i.builderImage }}:{{ include "wildfly.version" . }}
 {{- end }}
 
 {{/*
 wildfly.runtimeImage corresponds to the name of the WildFly Runtime Image
 */}}
 {{- define "wildfly.runtimeImage" -}}
-quay.io/wildfly/wildfly-runtime-centos7
+{{ .Values.build.s2i.runtimeImage }}:{{ include "wildfly.version" . }}
 {{- end }}
 
 {{/*
 If wildfly.version is not defined, use by defaul the Chart's appVersion
 */}}
 {{- define "wildfly.version" -}}
-{{- if .Values.wildfly -}}
-{{- default .Chart.AppVersion .Values.wildfly.version -}}
-{{- else -}}
-{{- .Chart.AppVersion -}}
-{{- end -}}
+{{- default .Chart.AppVersion .Values.build.s2i.version -}}
 {{- end -}}
 
 {{/*

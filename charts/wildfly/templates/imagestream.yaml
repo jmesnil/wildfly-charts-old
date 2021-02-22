@@ -11,7 +11,7 @@ metadata:
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: {{ include "wildfly.appName" . }}
+  name: {{ include "wildfly.appImage" . }}
   labels:
 {{- include "wildfly.labels" . | nindent 4 }}
 {{- end -}}

@@ -28,7 +28,7 @@ spec:
     sourceStrategy:
       from:
         kind: DockerImage
-        name: {{ include "wildfly.builderImage" . }}:{{ include "wildfly.version" . }}
+        name: {{ include "wildfly.builderImage" . }}
       env:
       - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
         value: "true"
@@ -64,11 +64,11 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appName" . }}:latest
+      name: {{ include "wildfly.appImageStreamTag" . }}
   source:
     type: Docker
     dockerfile: |-
-      FROM {{ include "wildfly.runtimeImage" . }}:{{ include "wildfly.version" . }}
+      FROM {{ include "wildfly.runtimeImage" . }}
       COPY /server $JBOSS_HOME
       USER root
       RUN chown -R jboss:root $JBOSS_HOME && chmod -R ug+rwX $JBOSS_HOME
@@ -85,7 +85,7 @@ spec:
     dockerStrategy:
       from:
         kind: DockerImage
-        name: {{ include "wildfly.runtimeImage" .}}:{{ include "wildfly.version" . }}
+        name: {{ include "wildfly.runtimeImage" .}}
       imageOptimizationPolicy: SkipLayers
     type: Docker
   triggers:

@@ -1,3 +1,5 @@
+image:
+  name: wildfly-app
 build:
   uri: https://github.com/wildfly/quickstart.git
   ref: 22.0.1.Final

@@ -9,7 +9,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appName" . }}:latest
+      name: {{ include "wildfly.appImageStreamTag" . }}
   source:
     type: Git
     git:

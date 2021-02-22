@@ -1,3 +1,4 @@
+{{- if .Values.deploy.enabled }}
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
@@ -15,7 +16,7 @@ spec:
           - {{ include "wildfly.appName" . }}
         from:
           kind: ImageStreamTag
-          name: {{ include "wildfly.appName" . }}:latest
+          name: {{ include "wildfly.appImageStreamTag" . }}
     - type: ConfigChange
   replicas: {{ .Values.deploy.replicas }}
   selector:
@@ -28,7 +29,7 @@ spec:
     spec:
       containers:
         - name: {{ include "wildfly.appName" . }}
-          image: {{ include "wildfly.appName" . }}
+          image: {{ include "wildfly.appImageStreamTag" . }}
           imagePullPolicy: Always
           ports:
           - name: jolokia
@@ -87,3 +88,4 @@ spec:
         secret:
           secretName: wildfly-extensions
       {{- end }}
+{{- end }}

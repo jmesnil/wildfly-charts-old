@@ -1,3 +1,4 @@
+{{- if .Values.deploy.enabled }}
 kind: Service
 apiVersion: v1
 metadata:
@@ -32,3 +33,4 @@ spec:
   type: ClusterIP
   sessionAffinity: None
   publishNotReadyAddresses: true
+{{- end }}
