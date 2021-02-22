@@ -16,4 +16,4 @@ jmesnil/wildfly         0.9.7           22.0            A Helm chart to build an
 # Install Helm Chart
 This will build an application image from a Git repository.
 
-A complete documentation of this Chart is available in [https://github.com/jmesnil/wildfly-charts/blob/main/charts/wildfly/README.md](the Chart's README).
+A complete documentation of this Chart is available in [its README](https://github.com/jmesnil/wildfly-charts/blob/main/charts/wildfly/README.md).
