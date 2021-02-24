@@ -1,8 +1,7 @@
 # wildfly-charts - Helm Charts for WildFly
 
-<p>
+<p align="center">
   <img src="https://helm.sh/img/helm.svg" alt="Helm logo" title="WildFly" height="90"/>
-  <span style="font-size:60px;vertical-align:top;">&nbsp;+&nbsp;</span>
   <img src="./wildfly.svg" alt="WildFly logo" title="WildFly" height="90"/>
 </p>
 
