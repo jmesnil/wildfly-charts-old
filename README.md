@@ -1,16 +1,21 @@
-# wildfly-charts
-Helm Charts for WildFly
+# wildfly-charts - Helm Charts for WildFly
+
+<p>
+  <img src="https://helm.sh/img/helm.svg" alt="Helm logo" title="WildFly" height="90"/>
+  <span style="font-size:60px;vertical-align:top;">&nbsp;+&nbsp;</span>
+  <img src="./wildfly.svg" alt="WildFly logo" title="WildFly" height="90"/>
+</p>
 
 # Install Helm Repository
 
-The WildFly Charts can be installed from [https://jmesnil.github.io/wildfly-charts/](https://jmesnil.github.io/wildfly-charts/)
+The `wildfly` Chart can be installed from [https://jmesnil.github.io/wildfly-charts/](https://jmesnil.github.io/wildfly-charts/)
 
 ```
-$ helm repo add jmesnil https://jmesnil.github.io/wildfly-charts/
-"jmesnil" has been added to your repositories
+$ helm repo add wildfly https://jmesnil.github.io/wildfly-charts/
+"wildfly" has been added to your repositories
 $ helm search repo wildfly
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-jmesnil/wildfly         0.9.7           22.0            A Helm chart to build and deploy WildFly applic...
+wildfly/wildfly         0.9.7           22.0            A Helm chart to build and deploy WildFly applic...
 ````
 
 # Install Helm Chart
