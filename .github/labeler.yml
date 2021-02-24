@@ -5,4 +5,8 @@ examples:
   - examples/**/*
 charts:
   - charts/**/*
+documentation:
+  - ./README.md
+  - charts/**/README.md
+  - charts/**/values.schema.json
  
