@@ -4,5 +4,5 @@ repo:
 examples:
   - examples/**/*
 charts:
-  - charts
+  - charts/**/*
  
