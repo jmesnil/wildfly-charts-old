@@ -15,9 +15,9 @@ deploy:
     enabled: true
   livenessProbe:
     httpGet:
-        path: /health/live
-        port: admin
+      path: /health/live
+      port: admin
   readinessProbe:
     httpGet:
-        path: /health/ready
-        port: admin
+      path: /health/ready
+      port: admin
