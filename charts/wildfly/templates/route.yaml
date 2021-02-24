@@ -1,5 +1,4 @@
-{{- if .Values.deploy.enabled }}
-{{- if (and .Values.deploy.route .Values.deploy.route.enabled) }}
+{{- if (and .Values.deploy.enabled .Values.deploy.route.enabled) }}
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
@@ -13,8 +12,9 @@ spec:
     kind: Service
     name: {{ include "wildfly.appName" . }}
     weight: 100
+  {{- if .Values.deploy.route.tls.enabled }}
   tls:
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
-{{- end }}
+    termination: {{ .Values.deploy.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.deploy.route.tls.insecureEdgeTerminationPolicy }}
+  {{- end }}
 {{- end }}
