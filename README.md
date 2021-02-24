@@ -1,8 +1,8 @@
 # wildfly-charts - Helm Charts for WildFly
 
 <p align="center">
-  <img src="https://helm.sh/img/helm.svg" alt="Helm logo" title="WildFly" height="90"/>
-  <img src="./wildfly.svg" alt="WildFly logo" title="WildFly" height="90"/>
+  <a href="https://helm.sh"><img src="https://helm.sh/img/helm.svg" alt="Helm logo" title="WildFly" height="90"/></a>&nbsp;
+  <a href="https://wildfly.org/"><img src="./wildfly.svg" alt="WildFly logo" title="WildFly" height="90"/></a>
 </p>
 
 # Install Helm Repository
