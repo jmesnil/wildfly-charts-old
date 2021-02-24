@@ -56,11 +56,9 @@ spec:
           readinessProbe:
             {{- tpl (toYaml .Values.deploy.readinessProbe) . | nindent 12 }}
           {{- end }}
-          {{- if (lookup "v1" "Secret" .Release.Namespace "wildfly-extensions") }}
+          {{- if .Values.deploy.volumeMounts }}
           volumeMounts:
-          - name: wildfly-extensions
-            mountPath: /etc/extensions
-            readOnly: true
+            {{- tpl (toYaml .Values.deploy.volumeMounts) . | nindent 12 }}
           {{- end }}
           env:
           - name: JGROUPS_PING_PROTOCOL
@@ -82,10 +80,8 @@ spec:
           envFrom:
           {{- tpl (toYaml .Values.deploy.envFrom) . | nindent 10 }}
           {{- end }}
-      {{- if (lookup "v1" "Secret" .Release.Namespace "wildfly-extensions") }}
+      {{- if .Values.deploy.volumes }}
       volumes:
-      - name: wildfly-extensions
-        secret:
-          secretName: wildfly-extensions
+        {{- tpl (toYaml .Values.deploy.volumes) . | nindent 8 }}
       {{- end }}
 {{- end }}
