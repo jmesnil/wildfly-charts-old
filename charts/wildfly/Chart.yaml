@@ -12,3 +12,4 @@ maintainers:
   - email: wildfly-dev@lists.jboss.org
     name: WildFly
     url: https://wildfly.org
+icon: https://design.jboss.org/wildfly/logo/final/wildfly_icon_256px.png

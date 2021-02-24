@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://helm.sh"><img src="https://helm.sh/img/helm.svg" alt="Helm logo" title="WildFly" height="90"/></a>&nbsp;
-  <a href="https://wildfly.org/"><img src="./wildfly.svg" alt="WildFly logo" title="WildFly" height="90"/></a>
+  <a href="https://wildfly.org/"><img src="https://design.jboss.org/wildfly/logo/final/wildfly_logo.svg" alt="WildFly logo" title="WildFly" height="90"/></a>
 </p>
 
 # Install Helm Repository
