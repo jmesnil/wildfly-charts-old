@@ -473,6 +473,29 @@
                             "description": "Enable/Disable creating a Route for the application",
                             "default": true,
                             "type": "boolean"
+                        },
+                        "tls": {
+                          "description": "TLS Configuration for the Route",
+                          "type": "object",
+                          "properties": {
+                            "enabled" : {
+                              "description": "Determines if the Route should be TLS-encrypted",
+                              "default": true,
+                              "type": "boolean"
+                            },
+                            "termination": {
+                              "description": "Determines the type of TLS termination to use",
+                              "type": "string",
+                              "enum": ["edge", "reencrypt", "passthrough"],
+                              "default": "edge"
+                            },
+                            "insecureEdgeTerminationPolicy": {
+                              "description": "Determines if insecure traffic should be redirected",
+                              "type": "string",
+                              "enum": ["Allow", "Disable", "Redirect"],
+                              "default": "Redirect"
+                            }
+                          }
                         }
                     }
                 },

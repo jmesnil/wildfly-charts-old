@@ -13,6 +13,10 @@ deploy:
   replicas: 1
   route:
     enabled: true
+    tls:
+      enabled: true
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
   livenessProbe:
     httpGet:
       path: /health/live
