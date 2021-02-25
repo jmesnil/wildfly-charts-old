@@ -2,14 +2,13 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
-  labels:
-    {{- include "wildfly.labels" . | nindent 4 }}
+  name: {{ include "wildfly-common.appBuilderImage" . }}
+  labels: {}
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appBuilderImage" . }}:latest
+      name: {{ include "wildfly-common.appBuilderImage" . }}:latest
   runPolicy: Serial
   source:
     git:
@@ -26,9 +25,7 @@ spec:
   strategy:
     type: Source
     sourceStrategy:
-      from:
-        kind: DockerImage
-        name: {{ include "wildfly.builderImage" . }}
+      from: {}
       env:
       - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
         value: "true"
@@ -50,8 +47,6 @@ spec:
     {{- toYaml .Values.build.resources | nindent 4 }}
   {{- end }}
   triggers:
-  - imageChange:
-    type: ImageChange
   - type: ConfigChange
 {{ end }}
 

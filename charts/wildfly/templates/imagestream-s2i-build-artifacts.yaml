@@ -4,7 +4,7 @@
 
 {{- define "wildfly.imagestream-s2i-build-artifacts" -}}
 metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
+  name: {{ include "wildfly-common.appBuilderImage" . }}
   labels:
     {{- include "wildfly.labels" . | nindent 4 }}
 {{- end -}}

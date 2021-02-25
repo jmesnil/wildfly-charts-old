@@ -3,4 +3,13 @@
 {{- end -}}
 
 {{- define "wildfly.buildconfig-s2i-build-artifacts" -}}
+metadata:
+  labels:
+    {{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  strategy:
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: {{ include "wildfly.builderImage" . }}
 {{- end -}}

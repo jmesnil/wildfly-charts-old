@@ -2,7 +2,7 @@
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: {{ include "wildfly.appName" . }}
+  name: {{ include "wildfly-common.appName" . }}
   labels:
   {{- include "wildfly.labels" . | nindent 4 }}
 spec:
@@ -13,23 +13,23 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - {{ include "wildfly.appName" . }}
+          - {{ include "wildfly-common.appName" . }}
         from:
           kind: ImageStreamTag
-          name: {{ include "wildfly.appImageStreamTag" . }}
+          name: {{ include "wildfly-common.appImageStreamTag" . }}
     - type: ConfigChange
   replicas: {{ .Values.deploy.replicas }}
   selector:
-    {{- include "wildfly.selectorLabels" . | nindent 4 }}
+    {{- include "wildfly-common.selectorLabels" . | nindent 4 }}
   template:
     metadata:
-      name: {{ include "wildfly.appName" . }}
+      name: {{ include "wildfly-common.appName" . }}
       labels:
       {{- include "wildfly.labels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ include "wildfly.appName" . }}
-          image: {{ include "wildfly.appImageStreamTag" . }}
+        - name: {{ include "wildfly-common.appName" . }}
+          image: {{ include "wildfly-common.appImageStreamTag" . }}
           imagePullPolicy: Always
           ports:
           - name: jolokia
@@ -70,7 +70,7 @@ spec:
           - name: ENABLE_GENERATE_DEFAULT_DATASOURCE
             value: 'false'
           - name: OPENSHIFT_DNS_PING_SERVICE_NAME
-            value: {{ include "wildfly.appName" . }}-ping
+            value: {{ include "wildfly-common.appName" . }}-ping
           - name: ENV_FILES
             value: /etc/extensions/*
           {{- if .Values.deploy.env }}

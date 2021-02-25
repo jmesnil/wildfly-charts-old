@@ -69,3 +69,8 @@ deploy:
     value: "1"
   - name: acma_FILTER_REF_NAME
     value: Access-Control-Max-Age
+  # Env to avoid OOME
+  - name: GC_MAX_METASPACE_SIZE
+    value: "256"
+  - name: GC_METASPACE_SIZE
+    value: "96"

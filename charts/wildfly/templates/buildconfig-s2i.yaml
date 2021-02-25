@@ -4,13 +4,9 @@
 
 {{- define "wildfly.buildconfig-s2i" -}}
 metadata:
-  name: {{ include "wildfly.appName" . }}
   labels:
     {{- include "wildfly.labels" . | nindent 4 }}
 spec:
-  output:
-    to:
-      name: {{ include "wildfly.appImageStreamTag" . }}
   source:
     dockerfile: |-
       FROM {{ include "wildfly.runtimeImage" . }}
@@ -19,23 +15,9 @@ spec:
       RUN chown -R jboss:root $JBOSS_HOME && chmod -R ug+rwX $JBOSS_HOME
       USER jboss
       CMD $JBOSS_HOME/bin/openshift-launch.sh
-    images:
-    - from:
-        kind: ImageStreamTag
-        name: {{ include "wildfly.appBuilderImage" . }}:latest
-      paths:
-      - destinationDir: .
-        sourcePath: /s2i-output/server/
   strategy:
     dockerStrategy:
       from:
         kind: DockerImage
         name: {{ include "wildfly.runtimeImage" .}}
-  triggers:
-  - imageChange:
-      from:
-        kind: ImageStreamTag
-        name: {{ include "wildfly.appBuilderImage" . }}:latest
-    type: ImageChange
-  - type: ConfigChange
 {{- end -}}

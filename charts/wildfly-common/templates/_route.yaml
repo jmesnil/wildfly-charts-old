@@ -2,12 +2,14 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
+  name: {{ include "wildfly-common.appName" . }}
   labels: {}
   annotations:
     openshift.io/host.generated: 'true'
 spec:
   to:
     kind: Service
+    name: {{ include "wildfly-common.appName" . }}
     weight: 100
   {{- if .Values.deploy.route.tls.enabled }}
   tls:

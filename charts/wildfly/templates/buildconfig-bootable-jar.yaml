@@ -2,14 +2,14 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: {{ include "wildfly.appName" . }}
+  name: {{ include "wildfly-common.appName" . }}
   labels:
 {{- include "wildfly.labels" . | nindent 4 }}
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ include "wildfly.appImageStreamTag" . }}
+      name: {{ include "wildfly-common.appImageStreamTag" . }}
   source:
     type: Git
     git:
@@ -39,8 +39,6 @@ spec:
     {{- toYaml .Values.build.resources | nindent 4 }}
 {{- end }}
   triggers:
-  - imageChange:
-    type: ImageChange
   - type: ConfigChange
   runPolicy: Serial
 {{- end }}
