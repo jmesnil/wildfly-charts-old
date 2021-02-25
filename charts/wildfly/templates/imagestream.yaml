@@ -3,8 +3,6 @@
 {{- end -}}
 
 {{- define "wildfly.imagestream" -}}
-metadata:
+{{- include "wilfly.metadata.labels" . }}
   name: {{ include "wildfly-common.appImage" . }}
-  labels:
-    {{- include "wildfly.labels" . | nindent 4 }}
 {{- end -}}
