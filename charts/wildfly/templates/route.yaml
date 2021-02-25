@@ -1,9 +1,3 @@
 {{- if (and .Values.deploy.enabled .Values.deploy.route.enabled) }}
-{{- include "wildfly-common.route" (list . "wildfly.route") -}}
-{{- end -}}
-
-{{- define "wildfly.route" -}}
-metadata:
-  labels:
-  {{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly-common.route" (list . "wildfly.metadata.labels") -}}
 {{- end -}}

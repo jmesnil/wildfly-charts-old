@@ -37,3 +37,9 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
+
+{{- define "wildfly.metadata.labels" -}}
+metadata:
+  labels:
+  {{- include "wildfly.labels" . | nindent 4 }}
+{{- end -}}
