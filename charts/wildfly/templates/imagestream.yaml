@@ -1,17 +1,10 @@
-{{- if and .Values.build.enabled -}}
-{{- if(eq .Values.build.mode "s2i") -}}
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
-  labels:
-{{- include "wildfly.labels" . | nindent 4 }}
----
+{{- if .Values.build.enabled -}}
+{{- include "wildfly-common.imagestream" (list . "wildfly.imagestream") -}}
 {{- end -}}
-apiVersion: image.openshift.io/v1
-kind: ImageStream
+
+{{- define "wildfly.imagestream" -}}
 metadata:
   name: {{ include "wildfly.appImage" . }}
   labels:
-{{- include "wildfly.labels" . | nindent 4 }}
+    {{- include "wildfly.labels" . | nindent 4 }}
 {{- end -}}

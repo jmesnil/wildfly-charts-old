@@ -1,0 +1,6 @@
+dependencies:
+- name: wildfly-common
+  repository: file://../wildfly-common
+  version: 0.1.0
+digest: sha256:c8d4692e90541090c4a0e977fb4a8feec04db484e2453478537dfd1bc41b7e88
+generated: "2021-02-25T09:14:18.237692+01:00"
