@@ -1,8 +1,8 @@
 {{- if .Values.build.enabled -}}
-{{- include "wildfly-common.imagestream" (list . "wildfly.imagestream") -}}
-{{- end -}}
+{{- include "wildfly-common.imagestream" (list . "wildfly.metadata.labels") }}
 
-{{- define "wildfly.imagestream" -}}
-{{- include "wilfly.metadata.labels" . }}
-  name: {{ include "wildfly-common.appImage" . }}
+{{- if eq .Values.build.mode "s2i" }}
+---
+{{- include "wildfly-common.imagestream-s2i-build-artifacts" (list . "wildfly.metadata.labels") }}
+{{- end -}}
 {{- end -}}

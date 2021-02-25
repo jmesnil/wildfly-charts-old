@@ -2,7 +2,8 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  labels:
+  name: {{ include "wildfly-common.appImage" . }}
+  labels: {}
 {{- end -}}
 
 {{- define "wildfly-common.imagestream" -}}
