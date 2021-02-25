@@ -1,6 +1,6 @@
 dependencies:
 - name: wildfly-common
-  repository: https://jmesnil.github.io/wildfly-charts/
+  repository: file://../wildfly-common
   version: 0.1.1
-digest: sha256:3b3299ee81b3448c3701ae03bdc125e6fed750f8a011420f05fb2a904770f092
-generated: "2021-02-25T15:56:23.019725+01:00"
+digest: sha256:003443b1144946d31e13e68706a7443a4ea9610a23270c02999b5996ce3081a7
+generated: "2021-02-25T16:15:55.130288+01:00"
