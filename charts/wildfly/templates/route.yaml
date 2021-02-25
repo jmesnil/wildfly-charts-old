@@ -1,1 +1,13 @@
-{{- include "wildfly-common.route" . -}}
+{{- if (and .Values.deploy.enabled .Values.deploy.route.enabled) }}
+{{- include "wildfly-common.route" (list . "wildfly.route") -}}
+{{- end -}}
+
+{{- define "wildfly.route" -}}
+metadata:
+  name: {{ include "wildfly.appName" . }}
+  labels:
+  {{- include "wildfly.labels" . | nindent 4 }}
+spec:
+  to:
+    name: {{ include "wildfly.appName" . }}
+{{- end -}}
