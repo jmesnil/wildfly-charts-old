@@ -11,9 +11,6 @@ build:
       value: '-XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m'
 deploy:
   replicas: 3
-  route:
-    tls:
-      termination: passthrough
   env:
       # Env vars to connect to PostgreSQL DB
     - name: POSTGRESQL_DATABASE
