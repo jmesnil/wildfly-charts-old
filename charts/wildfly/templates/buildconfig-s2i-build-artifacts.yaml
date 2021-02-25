@@ -3,9 +3,7 @@
 {{- end -}}
 
 {{- define "wildfly.buildconfig-s2i-build-artifacts" -}}
-metadata:
-  labels:
-    {{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly.metadata.labels" . }}
 spec:
   strategy:
     sourceStrategy:

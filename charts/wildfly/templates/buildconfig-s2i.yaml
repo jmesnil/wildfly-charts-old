@@ -3,9 +3,7 @@
 {{- end -}}
 
 {{- define "wildfly.buildconfig-s2i" -}}
-metadata:
-  labels:
-    {{- include "wildfly.labels" . | nindent 4 }}
+{{- include "wildfly.metadata.labels" . }}
 spec:
   source:
     dockerfile: |-
