@@ -13,3 +13,8 @@ maintainers:
     name: WildFly
     url: https://wildfly.org
 icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark_256px.png
+
+dependencies:
+- name: wildfly-common
+  version: 0.1.0
+  repository: file://../wildfly-common
