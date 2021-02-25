@@ -1,0 +1,22 @@
+{{- define "wildfly-common.buildconfig-s2i.tpl" -}}
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels: {}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+  source:
+    type: Docker
+    images: []
+  strategy:
+    dockerStrategy:
+      from: {}
+    type: Docker
+  triggers: {}
+{{ end }}
+
+{{- define "wildfly-common.buildconfig-s2i" -}}
+{{- include "wildfly-common.util.merge" (append . "wildfly-common.buildconfig-s2i.tpl") -}}
+{{- end -}}

@@ -1,5 +1,4 @@
 build:
-  enabled: true
   mode: s2i
   uri: https://github.com/jmesnil/quickstart.git
   ref: todo-backend
@@ -13,7 +12,6 @@ build:
   s2i:
     galleonLayers: cloud-server,postgresql-datasource,ejb
 deploy:
-  enabled: false
   replicas: 3
   env:
     # Env vars to connect to PostgreSQL DB

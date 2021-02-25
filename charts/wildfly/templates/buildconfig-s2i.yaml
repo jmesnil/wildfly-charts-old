@@ -1,61 +1,8 @@
 {{- if and .Values.build.enabled (eq .Values.build.mode "s2i") }}
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
-metadata:
-  name: {{ include "wildfly.appBuilderImage" . }}
-  labels:
-    {{- include "wildfly.labels" . | nindent 4 }}
-spec:
-  output:
-    to:
-      kind: ImageStreamTag
-      name: {{ include "wildfly.appBuilderImage" . }}:latest
-  runPolicy: Serial
-  source:
-    git:
-      ref: {{ quote .Values.build.ref }}
-      uri: {{ required "Git source repository URL is required" .Values.build.uri }}
-    {{- if .Values.build.contextDir }}    
-    contextDir: {{ .Values.build.contextDir }}
-    {{- end }}
-    {{- if .Values.build.images }}
-    images:
-      {{- tpl (toYaml .Values.build.images) . | nindent 6 }}
-    {{- end}}
-    type: Git
-  strategy:
-    type: Source
-    sourceStrategy:
-      from:
-        kind: DockerImage
-        name: {{ include "wildfly.builderImage" . }}
-      env:
-      - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER
-        value: "true"
-      - name: CUSTOM_INSTALL_DIRECTORIES
-        value: extensions/*
-      {{- if .Values.build.s2i }}
-      {{- if .Values.build.s2i.galleonLayers }}
-      - name: GALLEON_PROVISION_LAYERS
-        value: {{ quote .Values.build.s2i.galleonLayers }}
-      {{- end }}
-      {{- end }}
-      {{- if .Values.build.env }}
-      {{- tpl (toYaml .Values.build.env) . | nindent 6 }}
-      {{- end }}
-      incremental: true
-      forcePull: true
-  {{- if .Values.build.resources }}
-  resources:
-    {{- toYaml .Values.build.resources | nindent 4 }}
-  {{- end }}
-  triggers:
-  - imageChange:
-    type: ImageChange
-  - type: ConfigChange
----
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
+{{- include "wildfly-common.buildconfig-s2i" (list . "wildfly.buildconfig-s2i") -}}
+{{- end -}}
+
+{{- define "wildfly.buildconfig-s2i" -}}
 metadata:
   name: {{ include "wildfly.appName" . }}
   labels:
@@ -63,10 +10,8 @@ metadata:
 spec:
   output:
     to:
-      kind: ImageStreamTag
       name: {{ include "wildfly.appImageStreamTag" . }}
   source:
-    type: Docker
     dockerfile: |-
       FROM {{ include "wildfly.runtimeImage" . }}
       COPY /server $JBOSS_HOME
@@ -86,8 +31,6 @@ spec:
       from:
         kind: DockerImage
         name: {{ include "wildfly.runtimeImage" .}}
-      imageOptimizationPolicy: SkipLayers
-    type: Docker
   triggers:
   - imageChange:
       from:
@@ -95,4 +38,4 @@ spec:
         name: {{ include "wildfly.appBuilderImage" . }}:latest
     type: ImageChange
   - type: ConfigChange
-{{ end }}
+{{- end -}}
