@@ -3,6 +3,25 @@ entries:
   wildfly:
   - apiVersion: v2
     appVersion: "22.0"
+    created: "2021-02-25T15:17:32.28835132Z"
+    dependencies:
+    - name: wildfly-common
+      repository: file://../wildfly-common
+      version: 0.1.1
+    description: Build and Deploy WildFly applications on OpenShift
+    digest: bc15f8d0c1d4f4ccb3d2c42183266ec3166dea6358859775b8d26243cf2c7987
+    icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark_256px.png
+    maintainers:
+    - email: wildfly-dev@lists.jboss.org
+      name: WildFly
+      url: https://wildfly.org
+    name: wildfly
+    type: application
+    urls:
+    - https://github.com/jmesnil/wildfly-charts/releases/download/wildfly-0.9.12/wildfly-0.9.12.tgz
+    version: 0.9.12
+  - apiVersion: v2
+    appVersion: "22.0"
     created: "2021-02-25T14:50:12.81187099Z"
     dependencies:
     - name: wildfly-common
