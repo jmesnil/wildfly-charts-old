@@ -538,6 +538,14 @@
                 "volumes": {
                   "description": "Freeform array of volumes",
                     "type": [ "array", "null"]
+                },
+                "initContainers": {
+                  "description": "Freeform array of initContainers",
+                  "type": [ "array", "null"]
+                },
+                "extraContainers": {
+                  "description": "Freeform array of extra containers",
+                  "type": [ "array", "null"]
                 }
             }
         }
