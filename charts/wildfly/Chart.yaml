@@ -16,6 +16,5 @@ icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark_256px.png
 
 dependencies:
 - name: wildfly-common
-  version: 0.1.1
-  #repository: file://../wildfly-common
-  repository: https://jmesnil.github.io/wildfly-charts
+  version: 0.1.2
+  repository: file://../wildfly-common
