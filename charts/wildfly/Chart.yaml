@@ -16,5 +16,5 @@ icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark_256px.png
 
 dependencies:
 - name: wildfly-common
-  version: 0.1.2
+  version: 0.1.3
   repository: file://../wildfly-common

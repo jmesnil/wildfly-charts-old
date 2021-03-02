@@ -48,6 +48,8 @@ spec:
   {{- end }}
   triggers:
   - type: ConfigChange
+  {{- include "wildfly-common.buildconfig.triggers.github" . | nindent 2 -}}
+  {{- include "wildfly-common.buildconfig.triggers.generic" . | nindent 2 -}}
 {{ end }}
 
 {{- define "wildfly-common.buildconfig-s2i-build-artifacts" -}}
