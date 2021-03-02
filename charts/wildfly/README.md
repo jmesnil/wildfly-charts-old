@@ -14,8 +14,8 @@ The configuration for the image that is built and deployed is configured in a `i
 
 | Value | Description | Default | Additional Information |
 | ----- | ----------- | ------- | ---------------------- |
-| `image.name` | Name of the image you want to build/deploy | Defaults to the Helm release name. | The chart will create/reference an [ImageStream](https://docs.openshift.com/container-platform/4.6/openshift_images/image-streams-manage.html) based on this value. |
-| `image.tag` | Tag that you want to build/deploy | `latest` | The chart will create/reference an [ImageStreamTag](https://docs.openshift.com/container-platform/4.6/openshift_images/image-streams-manage.html#images-using-imagestream-tags_image-streams-managing) based on the name provided |
+| `image.name` | Name of the image you want to build/deploy | Defaults to the Helm release name. | The chart will create/reference an [ImageStream](https://docs.openshift.com/container-platform/latest/openshift_images/image-streams-manage.html) based on this value. |
+| `image.tag` | Tag that you want to build/deploy | `latest` | The chart will create/reference an [ImageStreamTag](https://docs.openshift.com/container-platform/latest/openshift_images/image-streams-manage.html#images-using-imagestream-tags_image-streams-managing) based on the name provided |
 
 ## Building the Application
 
@@ -30,9 +30,9 @@ The configuration to build the application image is configured in a `build` sect
 | `build.mode` | Determines whether the application will be built using WildFly S2I images or Bootable Jar | `s2i` | Allowed values: `s2i` or `bootable-jar` |
 | `build.env` | Freeform `env` items | - | [Kubernetes documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/). These environment variables will be used when the application is _built_. If you need to specify environment variables for the running application, use `deploy.env` instead. |
 | `build.resources` | Freeform `resources` items | - | [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) |
-| `build.images`| Freeform images injected in the source during build | - | [OpenShift documentation](https://docs.openshift.com/container-platform/4.6/builds/creating-build-inputs.html#builds-define-build-inputs_creating-build-inputs) |
-| `build.triggers.githubSecret`| Name of the secret containing the WebHookSecretKey for the GitHub Webhook | - | The secret must exist in the same namespace or the chart will fail to install - [OpenShift documentation](https://docs.openshift.com/container-platform/4.7/cicd/builds/triggering-builds-build-hooks.html#builds-webhook-triggers_triggering-builds-build-hooks) |
-| `build.triggers.genericSecret`| Name of the secret containing the WebHookSecretKey for the Generic Webhook | - | The secret must exist in the same namespace or the chart will fail to install - [OpenShift documentation](https://docs.openshift.com/container-platform/4.7/cicd/builds/triggering-builds-build-hooks.html#builds-webhook-triggers_triggering-builds-build-hooks) |
+| `build.images`| Freeform images injected in the source during build | - | [OpenShift documentation](https://docs.openshift.com/container-platform/latest/builds/creating-build-inputs.html#builds-define-build-inputs_creating-build-inputs) |
+| `build.triggers.githubSecret`| Name of the secret containing the WebHookSecretKey for the GitHub Webhook | - | The secret must exist in the same namespace or the chart will fail to install - [OpenShift documentation](https://docs.openshift.com/container-platform/latest/cicd/builds/triggering-builds-build-hooks.html#builds-webhook-triggers_triggering-builds-build-hooks) |
+| `build.triggers.genericSecret`| Name of the secret containing the WebHookSecretKey for the Generic Webhook | - | The secret must exist in the same namespace or the chart will fail to install - [OpenShift documentation](https://docs.openshift.com/container-platform/latest/cicd/builds/triggering-builds-build-hooks.html#builds-webhook-triggers_triggering-builds-build-hooks) |
 | `build.s2i` | Configuration specific to building with WildFly S2I images | - | - |
 | `build.s2i.version` | Version of the WildFly S2I images. | Defaults to this chart `AppVersion` | - |
 | `build.s2i.builderImage` | WildFly S2I Builder image | [quay.io/wildfly/wildfly-centos7](https://quay.io/wildfly/wildfly-centos7) | [WildFly S2I documentation](https://github.com/wildfly/wildfly-s2i)  |
@@ -46,9 +46,9 @@ The configuration to build the application image is configured in a `deploy` sec
 | Value | Description | Default | Additional Information |
 | ----- | ----------- | ------- | ---------------------- |
 | `deploy.enabled` | Determines if deployment-related resources should be created. | `true` | Set this to `false` if you do not want to deploy an application image built by this chart. |
-| `deploy.replicas` | Number of pod replicas to deploy. | `1` | [OpenShift Documentation](https://docs.openshift.com/container-platform/4.6/applications/deployments/what-deployments-are.html) | 
+| `deploy.replicas` | Number of pod replicas to deploy. | `1` | [OpenShift Documentation](https://docs.openshift.com/container-platform/latest/applications/deployments/what-deployments-are.html) | 
 | `deploy.route.enabled` | Determines if a `Route` should be created | `true` | Allows clients outside of OpenShift to access your application |
-| `deploy.route.tls.enabled` | Determines if the `Route` should be TLS-encrypted | `true`| [OpenShift Documentation](https://docs.openshift.com/container-platform/4.6/networking/routes/secured-routes.html) |
+| `deploy.route.tls.enabled` | Determines if the `Route` should be TLS-encrypted | `true`| [OpenShift Documentation](https://docs.openshift.com/container-platform/latest/networking/routes/secured-routes.html) |
 | `deploy.route.tls.termination` | Determines the type of TLS termination to use | `edge`| Allowed values: `edge, reencrypt, passthrough` |
 | `deploy.route.tls.insecureEdgeTerminationPolicy` | Determines if insecure traffic should be redirected | `Redirect` | Allowed values: `Allow, Disable, Redirect` |
 | `deploy.env` | Freeform `env` items | - | [Kubernetes documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/).  These environment variables will be used when the application is _running_. If you need to specify environment variables when the application is built, use `build.env` instead. |
