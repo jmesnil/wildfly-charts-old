@@ -183,6 +183,20 @@
                 "images": {
                     "description": "Freeform images injected in the source during build."
                 },
+                "triggers": {
+                    "description": "Webhooks to trigger building the application image",
+                    "type": ["object", "null"],
+                    "properties": {
+                      "githubSecret": {
+                        "description": "Name of the secret containing the WebHookSecretKey for the GitHub Webhook",
+                        "type": "string"
+                      },
+                      "genericSecret": {
+                        "description": "Name of the secret containing the WebHookSecretKey for the Generic Webhook",
+                        "type": "string"
+                      }
+                    }
+                },
                 "s2i": {
                     "description": "Configuration specific to S2I Build (applicable only if build mode is set to s2i)",
                     "type": ["object", "null"],

@@ -8,6 +8,7 @@ build:
   s2i:
     builderImage: quay.io/wildfly/wildfly-centos7
     runtimeImage: quay.io/wildfly/wildfly-runtime-centos7
+  triggers: {}
 deploy:
   enabled: true
   replicas: 1

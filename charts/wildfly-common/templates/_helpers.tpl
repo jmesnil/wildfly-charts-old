@@ -55,3 +55,36 @@ Selector labels
 app.kubernetes.io/name: {{ include "wildfly-common.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Trigger a build from GitHub Webhook
+*/}}
+{{- define "wildfly-common.buildconfig.triggers.github" -}}
+{{- if .Values.build.triggers.githubSecret}}
+{{- if lookup "v1" "Secret" .Release.Namespace .Values.build.triggers.githubSecret }}
+- type: "GitHub"
+  github:
+    secretReference:
+      name: {{ quote .Values.build.triggers.githubSecret }}
+{{ else }}
+{{ fail (printf "Secret '%s' for GitHub webhook does not exist." .Values.build.triggers.githubSecret) }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Trigger a build from Generic Webhook
+*/}}
+{{- define "wildfly-common.buildconfig.triggers.generic" -}}
+{{- if .Values.build.triggers.genericSecret}}
+{{- if lookup "v1" "Secret" .Release.Namespace .Values.build.triggers.genericSecret }}
+- type: "Generic"
+  generic:
+    secretReference:
+      name: {{ quote .Values.build.triggers.genericSecret }}
+    allowEnv: true
+{{ else }}
+{{ fail (printf "Secret '%s' for Generic webhook does not exist." .Values.build.triggers.genericSecret) }}
+{{- end }}
+{{- end }}
+{{- end }}
