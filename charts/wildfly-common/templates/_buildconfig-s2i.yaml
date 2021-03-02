@@ -20,6 +20,7 @@ spec:
         sourcePath: /s2i-output/server/
   strategy:
     dockerStrategy:
+      {{- include "wildfly-common.buildconfig.pullSecret" . | nindent 6 -}}
       from: {}
     type: Docker
   triggers:
