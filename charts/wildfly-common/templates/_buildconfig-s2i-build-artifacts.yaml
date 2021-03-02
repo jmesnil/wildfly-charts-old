@@ -25,6 +25,7 @@ spec:
   strategy:
     type: Source
     sourceStrategy:
+      {{- include "wildfly-common.buildconfig.pullSecret" . | nindent 6 -}}
       from: {}
       env:
       - name: GALLEON_PROVISION_DEFAULT_FAT_SERVER

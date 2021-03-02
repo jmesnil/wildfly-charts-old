@@ -8,6 +8,22 @@ The input of the `build` step is a Git repository that contains the application 
 
 The input of the `deploy` step is an `ImageStreamTag` resource that contains the built application image and the output is a `DeploymentConfig` and related resources to access the application from inside and outside OpenShift.
 
+## Prerequisites
+Below are prerequisites that may apply to your use case.
+
+### Pull Secret
+You will need to create a pull secret if you need to pull an image from an external registry that requires authentication. Use the following command as a reference to create your pull secret:
+```bash
+oc create secret docker-registry my-pull-secret --docker-server=$REGISTRY_URL --docker-username=$USERNAME --docker-password=$PASSWORD --docker-email=$EMAIL
+```
+
+You can use this secret by passing `--set build.pullSecret=my-pull-secret` to `helm install`, or you can configure this in a values file:
+```yaml
+build:
+  pullSecret: my-pull-secret
+```
+and apply by passing `-f $VALUES_FILE`.
+
 ## Application Image
 
 The configuration for the image that is built and deployed is configured in a `image` section.
@@ -27,6 +43,7 @@ The configuration to build the application image is configured in a `build` sect
 | `build.uri` | Git URI that references your git repo | &lt;required&gt; | Be sure to specify this to build the application. |
 | `build.ref` | Git ref containing the application you want to build | `main` | - |
 | `build.contextDir` | The sub-directory where the application source code exists | - | - |
+| `build.pullSecret` | Image pull secret | - | The secret must exist in the same namespace or the chart will fail to install - [OpenShift documentation](https://docs.openshift.com/container-platform/latesst/openshift_images/managing_images/using-image-pull-secrets.html) |
 | `build.mode` | Determines whether the application will be built using WildFly S2I images or Bootable Jar | `s2i` | Allowed values: `s2i` or `bootable-jar` |
 | `build.env` | Freeform `env` items | - | [Kubernetes documentation](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/). These environment variables will be used when the application is _built_. If you need to specify environment variables for the running application, use `deploy.env` instead. |
 | `build.resources` | Freeform `resources` items | - | [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) |

@@ -24,6 +24,7 @@ spec:
   strategy:
     type: Source
     sourceStrategy:
+      {{- include "wildfly-common.buildconfig.pullSecret" . | nindent 6 -}}
       from:
         kind: DockerImage
         name: {{ quote .Values.build.bootableJar.builderImage }}

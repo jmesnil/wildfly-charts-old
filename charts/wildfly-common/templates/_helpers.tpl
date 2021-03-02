@@ -88,3 +88,17 @@ Trigger a build from Generic Webhook
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Image pull secret to build the application image
+*/}}
+{{- define "wildfly-common.buildconfig.pullSecret" -}}
+{{- if .Values.build.pullSecret}}
+{{- if lookup "v1" "Secret" .Release.Namespace .Values.build.pullSecret }}
+pullSecret:
+  name: {{ .Values.build.pullSecret }}
+{{ else }}
+{{ fail (printf "Secret '%s' to pull images does not exist." .Values.build.pullSecret) }}
+{{- end }}
+{{- end }}
+{{- end }}
